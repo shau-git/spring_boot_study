@@ -1,0 +1,2 @@
+const VITE_BACKEND_DOMAIN = import.meta.env.VITE_BACKEND_DOMAIN;
+export default VITE_BACKEND_DOMAIN

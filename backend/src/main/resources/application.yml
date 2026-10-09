@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: backend
+  profiles:
+    active: dev  # dev  prod
+  config:
+    import: optional:file:.env[.properties]
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+            #after authentication is successful, where the app should redirect to
+            redirect-uri: "http://${BACKEND_DOMAIN}:${PORT}/login/oauth2/code/google" # standard redirect uri
+            # scope means, once the user is authenticated, what info is needed for this app (the resource)
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
+
+  flyway:
+    enabled: true # true false
+
+  datasource:
+#    url: ${DB_URL}
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none  #validate create none
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  frontend:
+    url: ${FRONTEND_DOMAIN}
+  cookie:
+    secure: ${SECURE}
+
+logging:
+  level:
+    '[org.springframework.security.oauth2]': DEBUG
+
+server:
+  port: ${PORT}
+
+jwt:
+  secret: ${JWT_SECRET}
+
+
